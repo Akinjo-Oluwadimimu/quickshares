@@ -25,7 +25,7 @@ export default function Home() {
             <li>Select a file from your device (max 10MB)</li>
             <li>Click &quot;Upload File&quot; to send it to our serverless API</li>
             <li>The file is securely stored in Supabase Storage</li>
-            <li>You'll receive a URL to access your uploaded file</li>
+            <li>You&rsquo;ll receive a URL to access your uploaded file</li>
           </ul>
         </div>
       </div>
