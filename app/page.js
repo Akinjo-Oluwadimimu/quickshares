@@ -23,7 +23,7 @@ export default function Home() {
           <h2 className="text-xl font-semibold mb-4">How it works</h2>
           <ul className="list-disc pl-5 space-y-2 text-gray-700">
             <li>Select a file from your device (max 10MB)</li>
-            <li>Click "Upload File" to send it to our serverless API</li>
+            <li>Click &quot;Upload File&quot; to send it to our serverless API</li>
             <li>The file is securely stored in Supabase Storage</li>
             <li>You'll receive a URL to access your uploaded file</li>
           </ul>
