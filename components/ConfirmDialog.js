@@ -1,4 +1,3 @@
-// components/ConfirmDialog.js
 "use client";
 
 export default function ConfirmDialog({ 

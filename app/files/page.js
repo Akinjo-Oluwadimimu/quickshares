@@ -100,7 +100,7 @@ export default function FileList() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="border rounded-lg p-4">
+            <div key={i} className="border border-gray-300 rounded-lg p-4">
               <div className="animate-pulse space-y-3">
                 <div className="h-4 bg-gray-200 rounded w-3/4"></div>
                 <div className="h-4 bg-gray-200 rounded w-1/2"></div>
@@ -145,7 +145,7 @@ export default function FileList() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {files.map((file) => (
-            <div key={file.name} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div key={file.name} className="border border-gray-300 rounded-lg p-4 hover:shadow-md transition-shadow">
               <div className="mb-2 truncate">
                 <span className="font-medium">File:</span> {file.name}
               </div>
@@ -178,6 +178,8 @@ export default function FileList() {
             onConfirm={handleDeleteConfirm}
             onCancel={() => setShowConfirm(false)}
             message={`Are you sure you want to delete ${fileToDelete}?`}
+            confirmText={deleting ? 'Deleting...' : 'Delete'}
+            isLoading={deleting}
         />
         )}
     </div>

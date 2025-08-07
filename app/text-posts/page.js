@@ -3,6 +3,9 @@ import { createClient } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 import TiptapEditor from '@/components/TiptapEditor';
 import ConfirmDialog from '@/components/ConfirmDialog';
+import { toast } from 'react-toastify';
+import { FaCopy, FaEdit, FaTrash, FaSpinner } from 'react-icons/fa';
+import 'react-toastify/dist/ReactToastify.css';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -58,6 +61,11 @@ export default function TextPosts() {
     }
   };
 
+  const handleEdit = () => {
+    // Scroll to editor section
+    document.getElementById('editor-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const handleDelete = async () => {
     if (!postToDelete) return;
     try {
@@ -80,7 +88,7 @@ export default function TextPosts() {
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text.replace(/<[^>]*>/g, ''));
-    // Add toast notification here if desired
+    toast.success('Content copied to clipboard!');
   };
 
   useEffect(() => {
@@ -120,19 +128,17 @@ export default function TextPosts() {
                   className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded"
                   title="Copy to clipboard"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                    <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-                  </svg>
+                  <FaCopy className="h-5 w-5" />
                 </button>
                 <button
-                  onClick={() => setEditingPost(post)}
+                  onClick={() => {
+                    setEditingPost(post);
+                    handleEdit();
+                  }}
                   className="p-2 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded"
                   title="Edit"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                  </svg>
+                  <FaEdit className="h-5 w-5" />
                 </button>
                 <button
                   onClick={() => {
@@ -142,9 +148,11 @@ export default function TextPosts() {
                   className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded"
                   title="Delete"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
+                  {isDeleting ? (
+                    <FaSpinner className="h-5 w-5 animate-spin" />
+                    ) : (
+                    <FaTrash className="h-5 w-5" />
+                    )}
                 </button>
               </div>
             </div>
@@ -155,7 +163,7 @@ export default function TextPosts() {
               )}
             </div>
             <div 
-              className="prose max-w-none overflow-y-auto max-h-96 border-t pt-4"
+              className="prose max-w-none overflow-y-auto max-h-96 border-t border-gray-300 pt-4"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </div>

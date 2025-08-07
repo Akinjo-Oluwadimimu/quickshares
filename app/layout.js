@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import "./globals.css";
+import { ToastContainer } from 'react-toastify';
 
 export const metadata = {
   title: "Create Next App",
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
           </div>
         </nav>
         <main>{children}</main>
+        <ToastContainer position="bottom-right" autoClose={3000} />
       </body>
     </html>
   );
