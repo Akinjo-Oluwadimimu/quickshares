@@ -86,9 +86,28 @@ export default function TextPosts() {
     }
   };
 
-  const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text.replace(/<[^>]*>/g, ''));
-    toast.success('Content copied to clipboard!');
+  const copyToClipboard = (htmlContent) => {
+    // Create temporary element to hold HTML
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = htmlContent;
+    
+    // Copy both plain text and HTML formats
+    const text = tempElement.textContent || tempElement.innerText || '';
+    const html = tempElement.innerHTML;
+    
+    const clipboardItem = new ClipboardItem({
+      'text/plain': new Blob([text], { type: 'text/plain' }),
+      'text/html': new Blob([html], { type: 'text/html' })
+    });
+    
+    navigator.clipboard.write([clipboardItem])
+      .then(() => toast.success('Content copied to clipboard with formatting!'))
+      .catch(() => {
+        // Fallback for browsers that don't support ClipboardItem
+        navigator.clipboard.writeText(text)
+          .then(() => toast.success('Content copied as plain text'))
+          .catch(() => toast.error('Failed to copy content'));
+      });
   };
 
   useEffect(() => {
